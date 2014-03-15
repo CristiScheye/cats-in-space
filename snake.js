@@ -21,12 +21,7 @@ var moveSegment = function(segment) {
   }
 }
 
-var segmentFartherFowardThan = function(snake, index) {
-  // if (snake[index - 1] === undefined) {
-  //   return snake[index];
-  // } else {
-  //   return snake[index - 1];
-  // }  
+var segmentFartherFowardThan = function(snake, index) { 
   return snake[index - 1] || snake[index]
 }
 
@@ -70,7 +65,6 @@ var advanceGame = function() {
     CHUNK.endGame();
     CHUNK.flashMessage("Snake ran into itself");
   } else if (ate(newSnake, CHUNK.gameBoundaries())) {
-    draw(newSnake,apple,"red");
     CHUNK.endGame();
     CHUNK.flashMessage("You hit a wall. Game Over! Your score is: " + score);
   } else {
