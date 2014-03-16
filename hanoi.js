@@ -49,9 +49,10 @@ var ring_4 = {color: "#FF8000",
   pixels: [{top: 8, left: 4}, {top: 8, left: 5}, {top: 8, left: 6},
           {top: 7, left: 4}, {top: 7, left: 5}, {top: 7, left: 6}]}
 
-tower_left.rings = [ring_1, ring_2, ring_3, ring_4]
-var towers = [tower_left, tower_right, tower_center]
-var chosenTower = tower_left
+tower_left.rings = [ring_1, ring_2, ring_3, ring_4];
+var towers = [tower_left, tower_right, tower_center];
+var chosenTower = tower_left;
+var chosenRing = null;
 
 
 var draw = function() {
@@ -59,11 +60,26 @@ var draw = function() {
   CHUNK.draw(drawableObjects);
 }
 
+var makeMove = function(direction) {
+  var ring = chosenTower.rings[chosenTower.rings.length - 1];
+  if( direction === "up" ) {
+    removeRing();
+  } else if( direction === "down" ) {
+    placeRing();
+  } else if( direction === "left" || direction === "right") {
+    //changeTower(ring, direction);
+  };
+  
+  draw();  
+}
 
-var removeRing = function(ring) {
-  var upperTop = ring.pixels[0].top
 
-  ring.pixels.forEach( function(coordinate) {
+var removeRing = function() {
+  chosenRing = chosenTower.rings.pop();
+
+  var upperTop = chosenRing.pixels[0].top
+
+  chosenRing.pixels.forEach( function(coordinate) {
     if(coordinate.top === upperTop) {
       coordinate.top = 2
     } else {
@@ -72,10 +88,11 @@ var removeRing = function(ring) {
   });
 }
 
-var placeRing = function(ring) {
-  var upperTop = ring.pixels[0].top
+var placeRing = function() {
+  chosenTower.rings.push(chosenRing);
+  var upperTop = chosenRing.pixels[0].top
   var towerSize = chosenTower.rings.length;
-  ring.pixels.forEach( function(coordinate) {
+  chosenRing.pixels.forEach( function(coordinate) {
     if( coordinate.top === upperTop ) {
       coordinate.top = 13 - ((towerSize-1)  * 2)
     } else {
@@ -84,16 +101,10 @@ var placeRing = function(ring) {
   });
 }
 
-var makeMove = function(direction) {
-  console.log(direction);
-  if(direction === "up") {
-    removeRing(ring_4);
-  } else if( direction === "down") {
-    placeRing(ring_4);
-  };
+var changeTower = function(ring, direction) {
 
-  draw();  
 }
+
 
 CHUNK.onArrowKey(makeMove);
 draw();
