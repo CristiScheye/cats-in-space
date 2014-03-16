@@ -32,6 +32,7 @@ var tower_right = {color: "gray",
           {top: 7, left: 23},
           {top: 6, left: 23},
           {top: 5, left: 23}]};
+
 var ring_1 = {color: "#210B61", 
   pixels: [{top: 14, left: 1}, {top: 14, left: 2}, {top: 14, left: 3}, {top: 14, left: 4}, {top: 14, left: 5}, {top: 14, left: 6},{top: 14, left: 7}, {top: 14, left: 8}, {top: 14, left: 9},
           {top: 13, left: 1}, {top: 13, left: 2}, {top: 13, left: 3}, {top: 13, left: 4}, {top: 13, left: 5}, {top: 13, left: 6},{top: 13, left: 7}, {top: 13, left: 8}, {top: 13, left: 9}]}
@@ -50,6 +51,9 @@ var ring_4 = {color: "#FF8000",
 
 tower_left.rings = [ring_1, ring_2, ring_3, ring_4]
 var towers = [tower_left, tower_right, tower_center]
+var chosenTower = tower_left
+
+
 var draw = function() {
   var drawableObjects = [tower_left, tower_center, tower_right, ring_1, ring_2, ring_3, ring_4];
   CHUNK.draw(drawableObjects);
@@ -58,7 +62,7 @@ var draw = function() {
 
 var removeRing = function(ring) {
   var upperTop = ring.pixels[0].top
-  console.log(upperTop)
+
   ring.pixels.forEach( function(coordinate) {
     if(coordinate.top === upperTop) {
       coordinate.top = 2
@@ -66,15 +70,29 @@ var removeRing = function(ring) {
       coordinate.top = 3
     };
   });
-  draw();  
+}
+
+var placeRing = function(ring) {
+  var upperTop = ring.pixels[0].top
+  var towerSize = chosenTower.rings.length;
+  ring.pixels.forEach( function(coordinate) {
+    if( coordinate.top === upperTop ) {
+      coordinate.top = 13 - ((towerSize-1)  * 2)
+    } else {
+      coordinate.top = 14 - ((towerSize-1) * 2)
+    };
+  });
 }
 
 var makeMove = function(direction) {
   console.log(direction);
   if(direction === "up") {
     removeRing(ring_4);
+  } else if( direction === "down") {
+    placeRing(ring_4);
   };
-  
+
+  draw();  
 }
 
 CHUNK.onArrowKey(makeMove);
