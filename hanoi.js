@@ -50,8 +50,12 @@ var ring_4 = {color: "#FF8000",
           {top: 7, left: 4}, {top: 7, left: 5}, {top: 7, left: 6}]}
 
 tower_left.rings = [ring_1, ring_2, ring_3, ring_4];
-var towers = [tower_left, tower_right, tower_center];
-var chosenTower = tower_left;
+tower_center.rings = [];
+tower_right.rings = [];
+
+var towers = [tower_left, tower_center, tower_right];
+var towerIndex = 0;
+var chosenTower = towers[towerIndex];
 var chosenRing = null;
 
 
@@ -61,13 +65,12 @@ var draw = function() {
 }
 
 var makeMove = function(direction) {
-  var ring = chosenTower.rings[chosenTower.rings.length - 1];
   if( direction === "up" ) {
     removeRing();
   } else if( direction === "down" ) {
     placeRing();
   } else if( direction === "left" || direction === "right") {
-    //changeTower(ring, direction);
+    changeTower(direction);
   };
   
   draw();  
@@ -90,6 +93,7 @@ var removeRing = function() {
 
 var placeRing = function() {
   chosenTower.rings.push(chosenRing);
+
   var upperTop = chosenRing.pixels[0].top
   var towerSize = chosenTower.rings.length;
   chosenRing.pixels.forEach( function(coordinate) {
@@ -99,9 +103,30 @@ var placeRing = function() {
       coordinate.top = 14 - ((towerSize-1) * 2)
     };
   });
+  chosenRing = null;
 }
 
-var changeTower = function(ring, direction) {
+var changeTower = function(direction) {
+
+  if( direction === "left" && towerIndex > 0 ) {
+    towerIndex = towerIndex - 1
+    chosenTower = towers[towerIndex];
+    
+    if( chosenRing !== null) {
+      chosenRing.pixels.forEach( function(pixel) {
+        pixel.left = pixel.left - 9;
+      });
+    }
+  } else if( direction === "right" && towerIndex < 2 ) {
+    towerIndex = towerIndex + 1
+    chosenTower = towers[towerIndex];
+
+    if( chosenRing !== null) {
+      chosenRing.pixels.forEach( function(pixel) {
+        pixel.left = pixel.left + 9;
+      });
+    };
+  };
 
 }
 
