@@ -58,7 +58,7 @@ var advanceGame = function() {
     growSnake(newSnake);
     apple = CHUNK.randomLocation();
     snakeColor = "yellow";
-    score = score + 1;
+    updateScore();
   }
 
   if (ate(newSnake, snake)) {
@@ -73,9 +73,15 @@ var advanceGame = function() {
   } 
 }
 
+var updateScore = function() {
+  score = score + 1;
+  document.getElementById("score").innerHTML= score;
+}
+
+
 var snake = [{top: 0, left: 1, direction: "right"}, {top: 0, left: 0, direction: "right"}];
 var apple = CHUNK.randomLocation();
-var score = 0;
+var score = 2;
 
 CHUNK.onArrowKey(changeDirection);
 CHUNK.executeNTimesPerSecond(advanceGame, 3);
