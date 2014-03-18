@@ -63,10 +63,20 @@ var advanceGame = function() {
 
   if (ate(newSnake, snake)) {
     CHUNK.endGame();
-    CHUNK.flashMessage("Snake ran into itself");
+
+    var response = confirm("Game Over! Snake ran into itself. Play Again?");
+
+    if(response === true) {
+      resetGame();
+    };
   } else if (ate(newSnake, CHUNK.gameBoundaries())) {
     CHUNK.endGame();
-    CHUNK.flashMessage("You hit a wall. Game Over! Your score is: " + score);
+
+    var response = confirm("Game Over! You hit a wall. Play again?");
+
+    if(response === true) {
+      resetGame();
+    };
   } else {
     snake = newSnake;
     draw(newSnake, apple, snakeColor);
@@ -77,8 +87,16 @@ var updateScore = function() {
   score = score + 1;
   document.getElementById("score").innerHTML= score;
 }
+ 
+var resetGame = function() {
+  snake = [{top: 0, left: 1, direction: "right"}, {top: 0, left: 0, direction: "right"}];
+  apple = CHUNK.randomLocation();
+  score = 2;
+  CHUNK.executeNTimesPerSecond(advanceGame, 3);
+}
 
 
+// Start of Game
 var snake = [{top: 0, left: 1, direction: "right"}, {top: 0, left: 0, direction: "right"}];
 var apple = CHUNK.randomLocation();
 var score = 2;
