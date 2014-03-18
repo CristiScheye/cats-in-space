@@ -59,15 +59,19 @@ var advanceGame = function() {
     apple = CHUNK.randomLocation();
     snakeColor = "yellow";
     updateScore();
-  }
-
-  if (ate(newSnake, snake)) {
+    snake = newSnake;
+    draw(snake, apple, snakeColor);
+    if((score - 2) % 7 === 0) {
+      alert("Level Up!!!");
+      increaseSpeed();
+    };
+  } else if (ate(newSnake, snake)) {
     CHUNK.endGame();
 
     var response = confirm("Game Over! Snake ran into itself. Play Again?");
 
     if(response === true) {
-      resetGame();
+      newGame();
     };
   } else if (ate(newSnake, CHUNK.gameBoundaries())) {
     CHUNK.endGame();
@@ -75,11 +79,12 @@ var advanceGame = function() {
     var response = confirm("Game Over! You hit a wall. Play again?");
 
     if(response === true) {
-      resetGame();
+      newGame();
     };
   } else {
     snake = newSnake;
-    draw(newSnake, apple, snakeColor);
+    draw(snake, apple, snakeColor);
+    
   } 
 }
 
@@ -88,18 +93,26 @@ var updateScore = function() {
   document.getElementById("score").innerHTML= score;
 }
  
-var resetGame = function() {
+var newGame = function() {
   snake = [{top: 0, left: 1, direction: "right"}, {top: 0, left: 0, direction: "right"}];
   apple = CHUNK.randomLocation();
   score = 2;
-  CHUNK.executeNTimesPerSecond(advanceGame, 3);
+  speed = 3;
+  CHUNK.executeNTimesPerSecond(advanceGame, speed)
 }
 
+var increaseSpeed = function() {
+  speed = speed + 1;
+  CHUNK.endGame();
+  CHUNK.executeNTimesPerSecond(advanceGame, speed);
+}
 
 // Start of Game
 var snake = [{top: 0, left: 1, direction: "right"}, {top: 0, left: 0, direction: "right"}];
 var apple = CHUNK.randomLocation();
 var score = 2;
+var speed = 3;
 
 CHUNK.onArrowKey(changeDirection);
-CHUNK.executeNTimesPerSecond(advanceGame, 3);
+newGame();
+console.log(speed);
