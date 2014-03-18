@@ -1,37 +1,43 @@
 <!DOCTYPE HTML>
-<head>
-  <title>Towers of Hanoi</title>
-  <link rel="stylesheet" href="style.css" type="text/css" />
-</head>
+<html>
+  <head>
+    <title>Towers of Hanoi</title>
+    <link rel="stylesheet" href="style.css" type="text/css" />
+  </head>
 
-<body>
-  <h1 id="header">Towers of Hanoi</h1>
+  <body>
+    <h1 id="header">Towers of Hanoi</h1>
 
-  <table>
-    <tr>
-      <td id="instructions">
-        <h4>Objective</h4>
-        <p>Move all of the rings from the left tower to the right tower, in a stack from smallest on top to largest on bottom. Try to do so in as few moves as possible.</p>
-        <h4>Instructions</h4>
-        <ul>
-          <li>Use the &#8592; and &#8594; keys to select a ring or tower</li>
-          <li>Use the &#8593; key to remove a ring and the &#8595; key to place a ring onto a tower</li>
-          <li>Note: only one ring can be moved at a time (the top ring on any tower)</li>
-        </ul>
+    <table>
+      <tr>
+        <td id="instructions">
+          <h4>Objective</h4>
+          <p>Move all of the rings from the left tower to the right tower, in a stack from smallest on top to largest on bottom. Try to do so in as few moves as possible.</p>
+          <h4>Instructions</h4>
+          <ul>
+            <li>Use the &#8592; and &#8594; keys to select a ring or tower</li>
+            <li>Use the &#8593; key to remove a ring and the &#8595; key to place a ring onto a tower</li>
+            <li>Note: only one ring can be moved at a time (the top ring on any tower)</li>
+          </ul>
 
-        <br/><hr/>
-        <strong>Total # of Moves: <span id="score">0</span></strong>
-        <br/><hr/>
-        <br/><br/>
-        <a href="index.html">&lt; &lt; Back to All Games</a>
-      </td>
-      <td>
-        <canvas id="chunk-game" height="450" width="900"></canvas>
-      </td>
-    </tr>
+          <br/><hr/>
+          <strong>Total # of Moves: <span id="score">0</span></strong>
+          <br/><hr/>
+          <br/><br/>
+          <a href="index.html">&lt; &lt; Back to All Games</a>
+        </td>
+        <td>
+          <canvas id="chunk-game" height="450" width="900"></canvas>
+        </td>
+      </tr>
 
-  </table>
+    </table>
 
-  <script type="text/javascript" src="chunk.js"></script>
-  <script type="text/javascript" src="hanoi.js"></script>
-</body>
+    <script type="text/javascript" src="chunk.js"></script>
+    <script type="text/javascript" src="hanoi.js"></script>
+
+    <div id="footer">
+        <a href="https://github.com/CristiScheye/js-games">See my Code on Github</a>
+      </div>
+  </body>
+</html>
