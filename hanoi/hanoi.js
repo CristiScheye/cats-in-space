@@ -20,7 +20,6 @@ var setupGame = function() {
   tower_center.rings = [];
   tower_right.rings = [];
   score = 0;
-  updateScore();
   towerIndex = 0;
   chosenTower = towers[towerIndex];  
   setupRingPixels();
