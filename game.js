@@ -44,15 +44,13 @@
   };
 
   Game.prototype.resetShip = function () {
-    var shipX = this.ship.pos[0];
     var shipY = this.ship.pos[1];
 
-
-    if (shipX < 0 || shipX > this.dim_x || shipY < 0 || shipY > this.dim_y) {
-      this.ship.pos[0] = this.dim_x / 5;
-      this.ship.pos[1] = this.dim_y / 2;
+    if (shipY < 0) {
+      this.ship.pos[1] = 0;
+    } else if (shipY > this.dim_y) {
+      this.ship.pos[1] = this.dim_y;
     }
-     console.log(shipX, shipY, this.ship.pos);
   };
 
   Game.prototype.checkCollisions = function () {
@@ -86,20 +84,13 @@
 
   Game.prototype.bindKeyHandlers = function(){
     var ship = this.ship;
-    key('down', function(){
-      ship.power([0, 1]);
-    });
-    key('up', function(){
+    key('left', function(){
       ship.power([0, -1]);
     });
-    key('left', function(){
-      ship.power([-1, 0]);
-    });
     key('right', function(){
-      ship.power([1, 0]);
+      ship.power([0,1]);
     });
     key('space', function(){
-      console.log('space was pressed');
       ship.fireBullet();
     })
   }
