@@ -12,14 +12,15 @@
     <script src="bullet.js"></script>
   </head>
   <body>
-    <h1 id="header">Asteroids!</h1>
     <canvas id="canvas"></canvas>
 
     <script>
       var canvas = document.getElementById("canvas");
+      var width = window.innerWidth;
+      var height = window.innerHeight;
 
-      canvas.setAttribute("width", Asteroids.Game.DIM_X);
-      canvas.setAttribute("height", Asteroids.Game.DIM_Y);
+      canvas.setAttribute("width", width);
+      canvas.setAttribute("height", height);
 
       var ctx = canvas.getContext('2d');
       var game = new Asteroids.Game(ctx);

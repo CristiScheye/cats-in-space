@@ -2,18 +2,18 @@
   var Asteroids = root.Asteroids = (root.Asteroids || {});
 
   var Game = Asteroids.Game = function(ctx){
+    this.dim_x = window.width;
+    this.dim_y = window.height;
     this.ctx = ctx;
     this.FPS = 30;
     this.asteroids = [];
-    this.ship = new Asteroids.Ship([Game.DIM_X / 5, Game.DIM_Y / 2]);
+    this.ship = new Asteroids.Ship([this.dim_x / 5, this.dim_y / 2]);
   };
 
-  Game.DIM_X = 1000;
-  Game.DIM_Y = 800;
 
   Game.prototype.addAsteroids = function(nAsteroids){
     for(var i = 0; i < nAsteroids; i++){
-      this.asteroids.push(Asteroids.Asteroid.prototype.randomAsteroid(Game.DIM_X, Game.DIM_Y));
+      this.asteroids.push(Asteroids.Asteroid.prototype.randomAsteroid(this.dim_x, this.dim_y));
     }
   };
 
@@ -33,8 +33,8 @@
       bulletX = bullets[i].pos[0];
       bulletY = bullets[i].pos[1];
       if (
-        bulletX > Game.DIM_X ||
-        bulletY > Game.DIM_Y ||
+        bulletX > this.dim_x ||
+        bulletY > this.dim_y ||
         bulletX < 0 ||
         bulletY < 0
         ){
@@ -48,9 +48,9 @@
     var shipY = this.ship.pos[1];
 
 
-    if (shipX < 0 || shipX > Game.DIM_X || shipY < 0 || shipY > Game.DIM_Y) {
-      this.ship.pos[0] = Game.DIM_X / 5;
-      this.ship.pos[1] = Game.DIM_Y / 2;
+    if (shipX < 0 || shipX > this.dim_x || shipY < 0 || shipY > this.dim_y) {
+      this.ship.pos[0] = this.dim_x / 5;
+      this.ship.pos[1] = this.dim_y / 2;
     }
      console.log(shipX, shipY, this.ship.pos);
   };
@@ -109,7 +109,12 @@
   };
 
   Game.prototype.draw = function(){
-    this.ctx.clearRect(0, 0, Game.DIM_X, Game.DIM_Y);
+    this.dim_x = window.innerWidth;
+    this.dim_y = window.innerHeight;
+    this.ctx.canvas.width = this.dim_x;
+    this.ctx.canvas.height = this.dim_y;
+
+    this.ctx.clearRect(0, 0, this.dim_x, this.dim_y);
     this.ship.draw(this.ctx);
     var asteroids = this.asteroids;
     for(var i = 0; i < asteroids.length; i++){
