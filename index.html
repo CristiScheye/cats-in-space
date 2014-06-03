@@ -1,24 +1,29 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>JS Games</title>
-    <link rel="stylesheet" href="style.css" type="text/css" />
+    <title>Asteroids</title>
+    <link rel="stylesheet" href="asteroids.css" type="text/css" />
+
+    <script src="keymaster.js"></script>
+    <script src="moving_object.js"></script>
+    <script src="asteroid.js"></script>
+    <script src="game.js"></script>
+    <script src="ship.js"></script>
+    <script src="bullet.js"></script>
   </head>
   <body>
-    <h1 id="header">Games</h1>
+    <h1 id="header">Asteroids!</h1>
+    <canvas id="canvas"></canvas>
 
-    <br/>
+    <script>
+      var canvas = document.getElementById("canvas");
 
-    <div id="games-list">
-      <ul>
-        <li><a href="snake/snake.html">Snake</a></li>
-        <li><a href="hanoi/hanoi.html">Towers of Hanoi</a></li>
-        <li><a href="asteroids/asteroids.html">Asteroids!</a></li>
-      </ul>
-    </div>
+      canvas.setAttribute("width", Asteroids.Game.DIM_X);
+      canvas.setAttribute("height", Asteroids.Game.DIM_Y);
 
-    <div id="footer">
-      <a href="https://github.com/CristiScheye/js-games">See my Code on Github</a>
-    </div>
+      var ctx = canvas.getContext('2d');
+      var game = new Asteroids.Game(ctx);
+      game.start();
+    </script>
   </body>
 </html>
