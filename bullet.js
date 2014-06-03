@@ -6,7 +6,7 @@
     Asteroids.MovingObject.call(this, pos, bulletVel, Bullet.LENGTH, Bullet.COLOR);
   };
 
-  Bullet.COLOR = 'red';
+  Bullet.COLOR = '#00ff0d';
   Bullet.LENGTH = 30;
   Bullet.WIDTH = 5;
 

@@ -56,7 +56,7 @@
   Game.prototype.checkCollisions = function () {
     var asteroids = this.asteroids;
     for(var i = 0; i < asteroids.length; i++){
-      if(asteroids[i].isCollidedWith(this.ship)){
+      if(this.ship.isCollidedWith(asteroids[i])){
         alert("Asteroids Strike Again!");
         this.stop();
       }
