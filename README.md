@@ -1,6 +1,6 @@
-Asteroids
+Cats in Space!
 ========
 
-[Play](http://cristischeye.github.io/js-games)
+[Play Me](http://cristischeye.github.io/cats-in-space)
 
-The classic Asteroids made with Javascript, HTML, and CSS.
+A feline twist on the classic Asteroids. Made with Javascript, HTML5, and CSS.
