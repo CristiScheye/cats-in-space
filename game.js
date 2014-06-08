@@ -8,6 +8,7 @@
     this.FPS = 30;
     this.asteroids = [];
     this.ship = new Asteroids.Ship([this.dim_x / 5, this.dim_y / 2]);
+    this.score = 0;
   };
 
 
@@ -22,6 +23,7 @@
     for (var i = 0; i < asteroids.length; i++) {
       if (asteroids[i].pos[0] < 0){
         asteroids.splice(i, 1);
+        i -= 1;
       }
     }
   };
@@ -39,6 +41,7 @@
         bulletY < 0
         ){
         bullets.splice(i, 1);
+        i -= 1;
       }
     }
   };
@@ -71,6 +74,12 @@
         if (bullets[i].hitAsteroids(asteroids[j])){
           asteroids.splice(j, 1);
           bullets.splice(i, 1);
+          this.score += 1;
+          debugger;
+
+          // don't skip values!
+          i-= 1;
+          j-= 1;
         }
       }
     }
@@ -85,10 +94,16 @@
   Game.prototype.bindKeyHandlers = function(){
     var ship = this.ship;
     key('left', function(){
-      ship.power([0, -1]);
+      ship.rotate(-3);
     });
     key('right', function(){
-      ship.power([0,1]);
+      ship.rotate(3);
+    });
+    key('up', function(){
+      ship.power(1);
+    });
+    key('down', function(){
+      ship.power(-1);
     });
     key('space', function(){
       ship.fireBullet();
@@ -132,7 +147,7 @@
   Game.prototype.step = function(){
     this.move();
     this.outOfBounds();
-    this.addAsteroids(Math.floor(Math.random() * 1.2));
+    // this.addAsteroids(Math.floor(Math.random() * 1.2));
     this.removeHitAsteroids();
     this.draw();
     this.checkCollisions();
@@ -141,7 +156,7 @@
   Game.prototype.start = function(){
     var game = this;
     this.bindKeyHandlers();
-    game.addAsteroids(10);
+    // game.addAsteroids(10);
     this.timerId = setInterval(function(){
       game.step();
     }, game.FPS);

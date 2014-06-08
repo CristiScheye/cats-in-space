@@ -6,14 +6,33 @@
     this.bullets = [];
     this.img = new Image();
     this.img.src = 'SpaceCatSmall.png'
+    this.ang = 0;
+    this.speed = 0;
+    this.vel = [0,0];
   };
 
-  MAX_VEL = 5;
+  MAX_SPEED = 5;
 
   Ship.inherits(Asteroids.MovingObject);
 
   Ship.prototype.power = function(impulse){
-    this.vel = [impulse[0] * MAX_VEL, impulse[1] * MAX_VEL];
+    this.speed += impulse
+
+    if (this.speed > MAX_SPEED) {
+      this.speed = MAX_SPEED;
+    } else if (-1 * this.speed < -1 * MAX_SPEED) {
+      this.speed = -1 * MAX_SPEED;
+    }
+    this.updateVelocity();
+  };
+
+  Ship.prototype.rotate = function (angle) {
+    this.ang += angle;
+  };
+
+  Ship.prototype.updateVelocity = function () {
+    this.vel[0] = Math.cos(Math.PI / 180 * this.ang) * this.speed;
+    this.vel[1] = Math.sin(Math.PI / 180 * this.ang) * this.speed;
   };
 
   Ship.prototype.fireBullet = function () {
@@ -23,7 +42,12 @@
   };
 
   Ship.prototype.draw = function () {
-    ctx.drawImage(this.img, this.pos[0], this.pos[1]);
+    ctx.save(); //saves the state of canvas
+    ctx.translate(this.pos[0], this.pos[1]); // translate origin to image's pos
+    ctx.translate(this.img.width / 2, this.img.height / 2); // translate to image's center (1/2 height and width)
+    ctx.rotate(Math.PI / 180 * this.ang) // rotate around pt
+    ctx.drawImage(this.img, -(this.img.width / 2), -(this.img.height / 2)); // draw image back and up
+    ctx.restore(); // restore coord sys
   },
 
   Ship.prototype.isCollidedWith = function (otherObj) {
