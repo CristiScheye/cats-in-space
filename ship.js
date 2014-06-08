@@ -37,8 +37,8 @@
 
   Ship.prototype.fireBullet = function () {
     var bullet_x = this.pos[0] + this.img.width * 0.6;
-    var bullet_y = this.pos[1] + this.img.height * 0.5;
-    this.bullets.push(new Asteroids.Bullet([bullet_x, bullet_y], this.vel));
+    var bullet_y = this.pos[1] + this.img.height * 0.6;
+    this.bullets.push(new Asteroids.Bullet([bullet_x, bullet_y], this.ang));
   };
 
   Ship.prototype.draw = function () {

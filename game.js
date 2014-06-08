@@ -147,7 +147,7 @@
   Game.prototype.step = function(){
     this.move();
     this.outOfBounds();
-    // this.addAsteroids(Math.floor(Math.random() * 1.2));
+    this.addAsteroids(Math.floor(Math.random() * 1.2));
     this.removeHitAsteroids();
     this.draw();
     this.checkCollisions();
@@ -156,7 +156,7 @@
   Game.prototype.start = function(){
     var game = this;
     this.bindKeyHandlers();
-    // game.addAsteroids(10);
+    game.addAsteroids(10);
     this.timerId = setInterval(function(){
       game.step();
     }, game.FPS);
