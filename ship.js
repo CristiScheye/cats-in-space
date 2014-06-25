@@ -5,22 +5,26 @@
     Asteroids.MovingObject.call(this, pos, [0, 0], Ship.RADIUS, Ship.COLOR);
     this.bullets = [];
     this.img = new Image();
-    this.img.src = 'SpaceCatSmall.png'
+    this.img.src = 'SpaceCatSmall.png';
     this.ang = 0;
     this.speed = 0;
     this.vel = [0,0];
   };
 
-  MAX_SPEED = 5;
+  MAX_SPEED = 10;
 
   Ship.inherits(Asteroids.MovingObject);
+
+  Ship.prototype.center = function() {
+    return [this.pos[0] + (this.img.width / 2), this.pos[1] + (this.img.height / 2)];
+  }
 
   Ship.prototype.power = function(impulse){
     this.speed += impulse
 
     if (this.speed > MAX_SPEED) {
       this.speed = MAX_SPEED;
-    } else if (-1 * this.speed < -1 * MAX_SPEED) {
+    } else if (this.speed < -1 * MAX_SPEED) {
       this.speed = -1 * MAX_SPEED;
     }
     this.updateVelocity();
@@ -52,8 +56,8 @@
 
   Ship.prototype.isCollidedWith = function (otherObj) {
     radius = this.img.height * 0.4;
-    x1 = this.pos[0] + (this.img.width / 2);
-    y1 = this.pos[1] + (this.img.height / 2);
+    var x1 = this.center()[0];
+    var y1 = this.center()[1];
 
     //presuming other objects are circles
     var x2 = otherObj.pos[0];
@@ -62,6 +66,10 @@
 
     var distance = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
     return (minDist >= distance);
+  },
+
+  Ship.prototype.move = function () {
+    Asteroids.MovingObject.prototype.move.call(this);
   }
 
 })(this);

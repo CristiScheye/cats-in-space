@@ -5,7 +5,7 @@
     this.dim_x = window.width;
     this.dim_y = window.height;
     this.ctx = ctx;
-    this.FPS = 30;
+    this.FPS = 60;
     this.asteroids = [];
     this.ship = new Asteroids.Ship([this.dim_x / 5, this.dim_y / 2]);
     this.score = 0;
@@ -21,7 +21,10 @@
   Game.prototype.removeOffBoardAsteroids = function() {
     var asteroids = this.asteroids;
     for (var i = 0; i < asteroids.length; i++) {
-      if (asteroids[i].pos[0] < 0){
+      if (asteroids[i].pos[0] < 0 || 
+          asteroids[i].pos[0] > this.dim_x  || 
+          asteroids[i].pos[1] < 0 ||
+          asteroids[i].pos[1] > this.dim_x ){
         asteroids.splice(i, 1);
         i -= 1;
       }
@@ -35,10 +38,7 @@
       bulletX = bullets[i].pos[0];
       bulletY = bullets[i].pos[1];
       if (
-        bulletX > this.dim_x ||
-        bulletY > this.dim_y ||
-        bulletX < 0 ||
-        bulletY < 0
+        bulletX > this.dim_x || bulletY > this.dim_y || bulletX < 0 || bulletY < 0
         ){
         bullets.splice(i, 1);
         i -= 1;
@@ -71,15 +71,14 @@
     var asteroids = this.asteroids;
     for(var i = 0; i < bullets.length; i++){
       for(var j = 0; j < asteroids.length; j++){
-        if (bullets[i].hitAsteroids(asteroids[j])){
+        var a = asteroids[j];
+        if (bullets[i].isCollidedWith(a)){
           asteroids.splice(j, 1);
           bullets.splice(i, 1);
           this.score += 1;
-          debugger;
-
-          // don't skip values!
-          i-= 1;
-          j-= 1;
+          j -= 1;
+          i -= 1;
+          break;
         }
       }
     }
@@ -94,16 +93,16 @@
   Game.prototype.bindKeyHandlers = function(){
     var ship = this.ship;
     key('left', function(){
-      ship.rotate(-3);
+      ship.rotate(-5);
     });
     key('right', function(){
-      ship.rotate(3);
+      ship.rotate(5);
     });
     key('up', function(){
-      ship.power(1);
+      ship.power(1.5);
     });
     key('down', function(){
-      ship.power(-1);
+      ship.power(-1.5);
     });
     key('space', function(){
       ship.fireBullet();
@@ -147,7 +146,9 @@
   Game.prototype.step = function(){
     this.move();
     this.outOfBounds();
-    this.addAsteroids(Math.floor(Math.random() * 1.2));
+    if (this.asteroids.length < 15) {
+      this.addAsteroids(2);
+    }
     this.removeHitAsteroids();
     this.draw();
     this.checkCollisions();

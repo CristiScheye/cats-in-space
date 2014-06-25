@@ -22,18 +22,16 @@
     ctx.moveTo(this.pos[0], this.pos[1]);
     ctx.lineTo(this.pos[0] + this.vel[0] * 5, this.pos[1] + this.vel[1] * 5);
     ctx.stroke();
-  }
+  };
 
-  Bullet.prototype.hitAsteroids = function(asteroid){
-    var minDist = asteroid.radius;
-    var x1 = this.pos[0] + Bullet.LENGTH;
-    var y1 = this.pos[1] + Bullet.WIDTH/2;
-    var x2 = asteroid.pos[0];
-    var y2 = asteroid.pos[1];
-    var distance = Math.sqrt(
-      Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2)
-    );
-    return(minDist >= distance);
-  }
+  Bullet.prototype.isCollidedWith = function(object){
+    var front_x = this.pos[0] + this.vel[0] * 5;
+    var front_y = this.pos[1] + this.vel[1] * 5;
+    var x = object.pos[0];
+    var y = object.pos[1];
+    
+    var dist = Math.sqrt(Math.pow(front_x - x, 2) + Math.pow(front_y - y, 2));
+    return dist < object.radius;
+  };
 
 })(this);

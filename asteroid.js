@@ -7,10 +7,8 @@
     return [ dx, dy ];
   }
 
-  var Asteroid = Asteroids.Asteroid = function (pos, vel, coords) {
-    this.color = 'white';
-    var radius = Math.random() * 15 + 15;
-    Asteroids.MovingObject.call(this, pos, vel, radius, this.color);
+  var Asteroid = Asteroids.Asteroid = function (pos, vel, coords, radius) {
+    Asteroids.MovingObject.call(this, pos, vel, radius, 'white');
     this.coords = coords;
   };
 
@@ -44,15 +42,19 @@
     var coords  = [];
     var pt_angle = 0;
     var x, y, radius;
+    var sumRadius = 0;
+    var count = 0;
     while (pt_angle < 360) {
       radius = (Math.random() * 15 ) + 30;
+      sumRadius += radius;
+      count += 1
       x = pos[0] + Math.cos(Math.PI / 180 * pt_angle) * radius;
       y = pos[1] + Math.sin(Math.PI / 180 * pt_angle) * radius;
       coords.push([x, y]);
       pt_angle += Math.random() * 40 + 20; //add 20 - 60 deg each time
     }
-
-    return new Asteroid(pos, vel, coords);
+    var avgRadius = sumRadius / count;
+    return new Asteroid(pos, vel, coords, avgRadius);
   };
 
   Asteroid.prototype.draw = function (ctx) {
@@ -75,42 +77,42 @@
       coord[0] += dx;
       coord[1] += dy;
     })
-  },
+  };
 
 
-  Asteroid.prototype.isCollidedWith = function (pt, minDist) {
-    function sqr(x) { return x * x }
-    function dist2(v, w) { return sqr(v[0] - w[0]) + sqr(v[1] - w[1]) }
-    function distToSegmentSquared(p, v, w) {
-      var l2 = dist2(v, w);
-      if (l2 == 0) return dist2(p, v);
-      var t = ((p[0] - v[0]) * (w[0] - v[0]) + (p[1] - v[1]) * (w[1] - v[1])) / l2;
-      if (t < 0) return dist2(p, v);
-      if (t > 1) return dist2(p, w);
-      return dist2(p, [v[0] + t * (w[0] - v[0]), v[1] + t * (w[1] - v[1])]);
-    }
+  // Asteroid.prototype.isCollidedWith = function (pt, minDist) {
+  //   function sqr(x) { return x * x }
+  //   function dist2(v, w) { return sqr(v[0] - w[0]) + sqr(v[1] - w[1]) }
+  //   function distToSegmentSquared(p, v, w) {
+  //     var l2 = dist2(v, w);
+  //     if (l2 == 0) return dist2(p, v);
+  //     var t = ((p[0] - v[0]) * (w[0] - v[0]) + (p[1] - v[1]) * (w[1] - v[1])) / l2;
+  //     if (t < 0) return dist2(p, v);
+  //     if (t > 1) return dist2(p, w);
+  //     return dist2(p, [v[0] + t * (w[0] - v[0]), v[1] + t * (w[1] - v[1])]);
+  //   }
 
-    function distToSegment(p, v, w) { return Math.sqrt(distToSegmentSquared(p, v, w)); }
+  //   function distToSegment(p, v, w) { return Math.sqrt(distToSegmentSquared(p, v, w)); }
 
-    for(var i = 0; i < this.coords.length; i++){
-      var ptA = this.coords[i];
-      var ptB;
+  //   for(var i = 0; i < this.coords.length; i++){
+  //     var ptA = this.coords[i];
+  //     var ptB;
 
-      console.log("checking collisions in Asteroid class")
+  //     console.log("checking collisions in Asteroid class")
 
-      if (i == this.coords.length - 1) {
-        ptB = this.coords[0];
-      } else {
-        ptB = this.coords[i + 1];
-      }
-      debugger;
-      console.log(distToSegment(pt, ptA, ptB))
-      if (minDist >= distToSegment(pt, ptA, ptB)) {
-        return true;
-      }
-    }
-    return false;
-  }
+  //     if (i == this.coords.length - 1) {
+  //       ptB = this.coords[0];
+  //     } else {
+  //       ptB = this.coords[i + 1];
+  //     }
+  //     debugger;
+  //     console.log(distToSegment(pt, ptA, ptB))
+  //     if (minDist >= distToSegment(pt, ptA, ptB)) {
+  //       return true;
+  //     }
+  //   }
+  //   return false;
+  // }
 
 
 })(this);
