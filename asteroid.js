@@ -18,8 +18,7 @@
 
   Asteroid.prototype.randomAsteroid = function (dimX, dimY) {
     var startLoc = Math.random()
-    var x = 0;
-    var y = 0;
+    var x, y;
     if (startLoc < 0.25) {
       // start on top edge
       x = Math.random() * dimX;
@@ -37,33 +36,36 @@
       x = 0;
       y = Math.random() * dimY;
     }
-    pos = [x, y];
-    coords  = [];
+
+    return this.createAsteroid([x,y], randomVelocity());
+  };
+
+  Asteroid.prototype.createAsteroid = function (pos, vel) {
+    var coords  = [];
     var pt_angle = 0;
-    var x, y;
-    var radius = Math.random() * 80 + 10;
+    var x, y, radius;
     while (pt_angle < 360) {
-      radius += (Math.random() - 0.5) * 20
+      radius = (Math.random() * 15 ) + 30;
       x = pos[0] + Math.cos(Math.PI / 180 * pt_angle) * radius;
       y = pos[1] + Math.sin(Math.PI / 180 * pt_angle) * radius;
       coords.push([x, y]);
-      pt_angle += Math.random() * 40 + 10; //add 10 - 60 deg each time
+      pt_angle += Math.random() * 40 + 20; //add 20 - 60 deg each time
     }
 
-  return new Asteroid(pos, randomVelocity(), coords);
+    return new Asteroid(pos, vel, coords);
   };
 
-  // Asteroid.prototype.draw = function (ctx) {
-  //   ctx.beginPath();
-  //   ctx.moveTo(this.coords[0][0], this.coords[0][1]);
+  Asteroid.prototype.draw = function (ctx) {
+    ctx.beginPath();
+    ctx.moveTo(this.coords[0][0], this.coords[0][1]);
 
-  //   for(var i = 1; i < this.coords.length; i++) {
-  //     ctx.lineTo(this.coords[i][0], this.coords[i][1]);
-  //   }
-  //   ctx.closePath();
-  //   ctx.strokeStyle = this.color;
-  //   ctx.stroke();
-  // };
+    for(var i = 1; i < this.coords.length; i++) {
+      ctx.lineTo(this.coords[i][0], this.coords[i][1]);
+    }
+    ctx.closePath();
+    ctx.strokeStyle = this.color;
+    ctx.stroke();
+  };
 
   Asteroid.prototype.move = function () {
     var dx = this.vel[0];
@@ -87,7 +89,7 @@
       if (t > 1) return dist2(p, w);
       return dist2(p, [v[0] + t * (w[0] - v[0]), v[1] + t * (w[1] - v[1])]);
     }
-    
+
     function distToSegment(p, v, w) { return Math.sqrt(distToSegmentSquared(p, v, w)); }
 
     for(var i = 0; i < this.coords.length; i++){
