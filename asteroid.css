@@ -1,10 +1,34 @@
-#canvas {
-  background-color: black;
-}
-
 html, body {
   width: 100%;
   height: 100%;
   margin: 0;
   overflow: hidden;
+  background-color: black;
 }
+
+.container {
+  color: #00ff0d;
+  background-color: black;
+  width: 50%;
+  margin: 0 auto;
+  border: thin solid #00ff0d;
+  text-align: center;
+}
+
+#play {
+  background-color: #00ff0d;
+  color: black;
+  padding: 10px;
+  margin: 20px;
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+}
+
+table {
+  width: 30%;
+  margin: 0 auto;
+  text-align: left;
+  border: thin solid #00ff0d;
+}
+

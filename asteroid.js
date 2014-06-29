@@ -78,41 +78,4 @@
       coord[1] += dy;
     })
   };
-
-
-  // Asteroid.prototype.isCollidedWith = function (pt, minDist) {
-  //   function sqr(x) { return x * x }
-  //   function dist2(v, w) { return sqr(v[0] - w[0]) + sqr(v[1] - w[1]) }
-  //   function distToSegmentSquared(p, v, w) {
-  //     var l2 = dist2(v, w);
-  //     if (l2 == 0) return dist2(p, v);
-  //     var t = ((p[0] - v[0]) * (w[0] - v[0]) + (p[1] - v[1]) * (w[1] - v[1])) / l2;
-  //     if (t < 0) return dist2(p, v);
-  //     if (t > 1) return dist2(p, w);
-  //     return dist2(p, [v[0] + t * (w[0] - v[0]), v[1] + t * (w[1] - v[1])]);
-  //   }
-
-  //   function distToSegment(p, v, w) { return Math.sqrt(distToSegmentSquared(p, v, w)); }
-
-  //   for(var i = 0; i < this.coords.length; i++){
-  //     var ptA = this.coords[i];
-  //     var ptB;
-
-  //     console.log("checking collisions in Asteroid class")
-
-  //     if (i == this.coords.length - 1) {
-  //       ptB = this.coords[0];
-  //     } else {
-  //       ptB = this.coords[i + 1];
-  //     }
-  //     debugger;
-  //     console.log(distToSegment(pt, ptA, ptB))
-  //     if (minDist >= distToSegment(pt, ptA, ptB)) {
-  //       return true;
-  //     }
-  //   }
-  //   return false;
-  // }
-
-
 })(this);

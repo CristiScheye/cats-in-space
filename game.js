@@ -5,7 +5,7 @@
     this.dim_x = window.width;
     this.dim_y = window.height;
     this.ctx = ctx;
-    this.FPS = 60;
+    this.FPS = 80;
     this.asteroids = [];
     this.ship = new Asteroids.Ship([this.dim_x / 5, this.dim_y / 2]);
     this.score = 0;

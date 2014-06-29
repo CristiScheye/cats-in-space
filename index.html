@@ -2,11 +2,40 @@
 <html>
   <head>
     <title>Cats in Space!</title>
+    <meta charset="utf-8">
     <link rel="stylesheet" href="asteroid.css" type="text/css" />
-
   </head>
   <body>
     <canvas id="canvas"></canvas>
+
+    <div id="directions" class="container">
+      <h1>Cats in Space!</h1>
+
+      <h2>Directions</h2>
+
+      <p>Help Captain Miffles destroy the asteroids!</p>
+
+      <table>
+        <tr>
+          <td>[space]</td>
+          <td>Shoot</td>
+        </tr>
+        <tr>
+          <td>&larr; &rarr;</td>
+          <td>Rotate</td>
+        </tr>
+        <tr>
+          <td>&uarr; &darr;</td>
+          <td>Move back/forwards</td>
+        </tr>  
+      </table>
+
+      <span id="play">Play!</span>
+    </div>
+
+    <div id="restart" class="container">
+
+    </div>
 
     <script src="keymaster.js"></script>
     <script src="moving_object.js"></script>
@@ -15,16 +44,22 @@
     <script src="ship.js"></script>
     <script src="bullet.js"></script>
     <script>
+      var directions = document.getElementById('directions');
       var canvas = document.getElementById("canvas");
       var width = window.innerWidth;
       var height = window.innerHeight;
-
-      canvas.setAttribute("width", width);
-      canvas.setAttribute("height", height);
-
+      var playButton = document.getElementById('play');
       var ctx = canvas.getContext('2d');
       var game = new Asteroids.Game(ctx);
-      game.start();
+      
+      playButton.addEventListener('click', function() {
+        directions.parentElement.removeChild(directions);
+
+        canvas.setAttribute("width", width);
+        canvas.setAttribute("height", height);
+        
+        game.start();
+      })
     </script>
   </body>
 </html>
